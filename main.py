@@ -17,7 +17,6 @@ images_dir = Path('Images').expanduser()
 dim = (128,128)
 X_image_train = []
 df['present'] = False
-print("Reached 1")
 for fname in listdir(images_dir):
     ind = fname[:-4]
     df['present'][int(ind)] = True
@@ -27,18 +26,15 @@ for fname in listdir(images_dir):
     X_image_train.append(im_resized)
     # break
 
-## Converting the image to numpy array
 X_image_array=[]
 for x in range(len(X_image_train)):
     X_image=np.array(X_image_train[x],dtype='uint8')
     X_image_array.append(X_image)
     # break
-print("Reached 2")
-# print(X_image_array[0].shape)
+
 data = np.stack(X_image_array) 
 data = data.reshape(len(data),-1)
 data = data/255
-# inp = 'dummy_pic.png'
 dim = (128,128)
 im = Image.open(fpath)
 inp = im.resize(dim)
@@ -59,14 +55,12 @@ for i in range(0,len(data)):
       cnt+=1
     else:
       break
-  # print(str(dist) + " " + str(cnt))
 
   df['distance'][cnt] = dist
   cnt+=1
-print("Reached 3")
+# print("Reached 3")
 df = df.loc[df['present'] == True]
 df = df.sort_values('distance')
 for i in range(0,10):
   url = df.iloc[i]['Image_Front']
   urlretrieve(url,'AnswerImages/' + str(i) + '.jpg')
-print("Reached 4")
